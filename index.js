@@ -15,6 +15,10 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
 
+server.listen(3000, function(){
+    console.log('listening on *:3000');
+});
+
 io.on('connection', function(socket) {
     // klient nasłuchuje na wiadomość wejścia do czatu
     socket.on('join', function(name) {
@@ -27,19 +31,14 @@ io.on('connection', function(socket) {
         io.emit('update', {
             users:userService.getAllUsers() 
         });
-    })
-});
-
-io.on('connection', function(socket){
-    socket.on('disconnect', () => {
-        userService.removeUser(socket.id);
-        socket.broadcast.emit('update', {
-            users:userService.getAllUsers()
-        });
     });
-});
 
-io.on('connection', function(socket) {
+    socket.on('disconnect', () => {
+            userService.removeUser(socket.id);
+            socket.broadcast.emit('update', {
+                users:userService.getAllUsers()
+            });
+        });
     socket.on('message', function(message) {
         //z obiektu userService bierzemy odpowiedzniego użytkownika po id i przy pomycy składni ES6 bierzeny tylko name z całego obiektu
         const {name} = userService.getUserById(socket.id);
@@ -51,6 +50,4 @@ io.on('connection', function(socket) {
     });
 });
 
-server.listen(3000, function(){
-    console.log('listening on *:3000');
-});
+

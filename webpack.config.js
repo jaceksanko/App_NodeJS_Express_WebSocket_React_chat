@@ -6,7 +6,7 @@ const OptimizeJsPlugin = require('optimize-js-plugin');
 module.exports = (env) => {
     const environment = env || 'production';
     const plugins = [new HtmlWebpackPlugin({
-        template: 'src/index.html',
+        template: 'client/index.html',
         filename: 'index.html',
         inject: 'body'
     })];
@@ -19,7 +19,6 @@ module.exports = (env) => {
     }
 
     return {
-        mode: environment,
         entry: (env !== 'production' ? [
             'react-hot-loader/patch',
             'webpack-dev-server/client?http://localhost:8080',
