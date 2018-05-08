@@ -54,7 +54,7 @@ class App extends Component {
 
     renderLayout() {
         return (
-            <div className={style.App}>
+            <div className={styles.App}>
                 <div className={styles.AppHeader}>
                     <div className={styles.AppTitle}>
                         ChatApp
@@ -64,7 +64,7 @@ class App extends Component {
                     </div>
                 </div>
                 <div className={styles.AppBody}>
-                    <UserList
+                    <UsersList
                         users={this.state.users}
                     />
                     <div className={styles.MessageWrapper}>

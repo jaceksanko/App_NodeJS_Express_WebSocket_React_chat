@@ -1,24 +1,33 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const OptimizeJsPlugin = require('optimize-js-plugin');
+//modules import
+const   path = require('path'),
+        webpack = require('webpack'),
+        UglifyJSPlugin = require('uglifyjs-webpack-plugin'),
+        HtmlWebpackPlugin = require('html-webpack-plugin'),
+        OptimizeJSPlugin = require('optimize-js-plugin');
+//enviroment variable
+let env = process.env.NODE_ENV || 'development';
 
-//webpack.config.js
-module.exports = (env) => {
-    const environment = env || 'production';
-    const plugins = [new HtmlWebpackPlugin({
-        template: 'client/index.html',
+//plugins configuration
+const plugins = [
+        new HtmlWebpackPlugin({
+        template: 'src/index.html',
         filename: 'index.html',
         inject: 'body'
     })];
+    //te wtyczki odpalają się zawsze
     if (env === 'production') {
         plugins.push(
-            new OptimizeJsPlugin({
+            new webpack.optimize.UglifyJsPlugin(),
+            new OptimizeJSPlugin({
                 sourceMap: false
             })
         )
     }
+//te powyższe odpalają się tylko przy production.
 
-    return {
+
+//webpack.config.js
+module.exports =  {
         entry: (env !== 'production' ? [
             'react-hot-loader/patch',
             'webpack-dev-server/client?http://localhost:8080',
@@ -49,5 +58,4 @@ module.exports = (env) => {
             ]
         },
         plugins: plugins
-    }
 };

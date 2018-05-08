@@ -13,7 +13,7 @@ class UserForms extends React.Component {
         this.props.onUserSubmit(this.state.name);
     }
 
-    hanfleChange(e) {
+    handleChange(e) {
         this.setState({ name: e.target.value });
     }
 
